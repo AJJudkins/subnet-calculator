@@ -64,8 +64,10 @@ def parse_reqs(items):
     reqs = {}
     for it in items:
         name, _, n = it.partition("=")
-        if not n.isdigit():
-            raise ValueError(f"bad requirement '{it}', use NAME=HOSTS")
+        if not name.strip() or not n.isdigit() or not 1 <= int(n) <= 2 ** 24:
+            raise ValueError(f"bad requirement '{it}', use NAME=HOSTS (HOSTS between 1 and 16777216)")
+        if name in reqs:
+            raise ValueError(f"duplicate requirement name '{name}'")
         reqs[name] = int(n)
     return reqs
 

@@ -42,3 +42,19 @@ def test_plan_out_of_space():
 def test_parse_reqs_bad():
     with pytest.raises(ValueError):
         s.parse_reqs(["oops"])
+
+
+def test_requirement_validation():
+    import pytest
+    import subnetcalc
+    for bad in (["A=0"], ["=5"], ["A=x"], ["A=5", "A=6"], ["A=99999999999"]):
+        with pytest.raises(ValueError):
+            subnetcalc.parse_reqs(bad)
+
+
+def test_cli_bad_cidr_exits_1():
+    import pytest
+    import subnetcalc
+    with pytest.raises(SystemExit) as e:
+        subnetcalc.main(["info", "not-a-cidr"])
+    assert e.value.code == 1

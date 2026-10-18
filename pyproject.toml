@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "subnet-calculator"
+version = "0.2.0"
+description = "CIDR info and VLSM planner built on the standard ipaddress module."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+subnetcalc = "subnetcalc:main"
+
+[tool.setuptools]
+py-modules = ["subnetcalc"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

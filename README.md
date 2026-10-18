@@ -1,5 +1,7 @@
 # subnet-calculator
 
+[![CI](https://github.com/AJJudkins/subnet-calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/AJJudkins/subnet-calculator/actions/workflows/ci.yml)
+
 A command-line CIDR calculator and **VLSM planner** built on Python's `ipaddress` module. Give it an address block and the number of hosts each network needs, and it carves the block into non-overlapping subnets.
 
 ## Problem
@@ -45,6 +47,17 @@ Link             2  10.0.0.208/30           2  10.0.0.209 - 10.0.0.210
 
 ## What it demonstrates
 Networking fundamentals (CIDR, VLSM, address math), clean use of the standard library, input validation, and tests that check no overlaps and sufficient capacity.
+
+## Hardening notes
+- Requirements are validated (`NAME=HOSTS` with 1-16,777,216 hosts, no duplicate names) and invalid CIDRs or requests exit with code 1 and a clear message.
+- Console script after `pip install -e .`: `subnetcalc info 10.0.0.0/24`.
+
+## Security and testing status
+
+- **Safety:** pure calculation: no network access, no files read or written.
+- **Tested:** CIDR math, VLSM allocation and input validation (unit tests).
+- **Not tested:** cross-checking against vendor or router tooling, IPv6 planning (VLSM is IPv4 only), and very large address plans.
+- See [SECURITY.md](SECURITY.md).
 
 ## License
 MIT
